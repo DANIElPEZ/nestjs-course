@@ -1,0 +1,9 @@
+node_modules
+*.prettierrc
+*.mjs
+nest-cli.json
+tsconfig.json
+tsconfig.build.json
+package-lock.json
+/test
+/dist

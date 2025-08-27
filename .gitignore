@@ -1,6 +1,7 @@
 node_modules
 *.prettierrc
 *.mjs
+.env
 nest-cli.json
 tsconfig.json
 tsconfig.build.json

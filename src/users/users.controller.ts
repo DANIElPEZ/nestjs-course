@@ -1,19 +1,24 @@
-import { Controller, Get, Param, Post, Body, Delete, Put, NotFoundException } from '@nestjs/common';
-import { CreateUserDto, UpdateUserDto } from './user.dto';
+import { Controller, Get, Param, Post, Body, Delete, Put, NotFoundException, ParseIntPipe } from '@nestjs/common';
+import { CreateUserDto, UpdateUserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')// endpoint /users
 export class UsersController { //class represents logic
-     constructor(private userService: UsersService){}
+     constructor(private userService: UsersService) { }
 
      @Get() // HTTP GET method
-     getUsers(){
+     getUsers() {
           return this.userService.findAll();
      }
 
      @Get(':id') // HTTP GET method with parameter
-     getUserById(@Param('id') id: string){// @Param decorator extracts the 'id' from the route
+     getUserById(@Param('id', ParseIntPipe) id: number) {// @Param decorator extracts the 'id' from the route
           return this.userService.findOne(id);
+     }
+
+      @Get(':id/profile') // HTTP GET method with parameter
+     getProfileById(@Param('id', ParseIntPipe) id: number) {// @Param decorator extracts the 'id' from the route
+          return this.userService.getProfileById(id);
      }
 
      @Post()// HTTP POST method
@@ -22,12 +27,12 @@ export class UsersController { //class represents logic
      }
 
      @Delete(':id')// HTTP DELETE method with parameter
-     deleteUser(@Param('id') id: string){
+     deleteUser(@Param('id', ParseIntPipe) id: number) {
           return this.userService.delete(id);
      }
 
      @Put(':id') // HTTP PUT method with parameter
-     updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+     updateUser(@Param('id', ParseIntPipe) id: number, @Body() body: UpdateUserDto) {
           return this.userService.update(id, body);
      }
 }

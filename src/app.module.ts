@@ -15,9 +15,9 @@ import { UsersModule } from './users/users.module';
           type: 'postgres',
           host: 'localhost',
           port: 5432,
-          database: configService.get('my_blog_db'),
-          username: configService.get('blog_user'),
-          password: configService.get('blog_password'),
+          database: configService.get('db'),
+          username: configService.get('db_user'),
+          password: configService.get('db_password'),
           synchronize: true,
           autoLoadEntities: true
         }),

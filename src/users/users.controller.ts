@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Delete, Put, NotFoundException, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Delete, Put, ParseIntPipe } from '@nestjs/common';
 import { CreateUserDto, UpdateUserDto } from './dtos/user.dto';
 import { UsersService } from './users.service';
 
@@ -16,9 +16,14 @@ export class UsersController { //class represents logic
           return this.userService.findOne(id);
      }
 
-      @Get(':id/profile') // HTTP GET method with parameter
+     @Get(':id/profile') // HTTP GET method with parameter
      getProfileById(@Param('id', ParseIntPipe) id: number) {// @Param decorator extracts the 'id' from the route
           return this.userService.getProfileById(id);
+     }
+
+     @Get(':id/posts') // HTTP GET method with parameter
+     getPosts(@Param('id', ParseIntPipe) id: number) {// @Param decorator extracts the 'id' from the route
+          return this.userService.getPostsByUserId(id);
      }
 
      @Post()// HTTP POST method

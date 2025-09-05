@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
 
 @Module({
   imports: [
@@ -18,12 +19,13 @@ import { UsersModule } from './users/users.module';
           database: configService.get('db'),
           username: configService.get('db_user'),
           password: configService.get('db_password'),
-          synchronize: true,
+          synchronize: false,
           autoLoadEntities: true
         }),
         inject:[ConfigService]
       }),
-    UsersModule
+    UsersModule,
+    PostsModule
   ],
   controllers: [AppController],
   providers: [AppService]

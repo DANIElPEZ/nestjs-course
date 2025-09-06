@@ -24,9 +24,9 @@ export class PostsService {
     return post as Post;
   }
 
-  async create(body: CreatePostDto) {
+  async create(body: CreatePostDto, userId: number) {
     try {
-      await this.postsRepository.save({ ...body, user: { id: body.userId }, categories: body.categoryIds?.map(id => ({ id })) });
+      await this.postsRepository.save({ ...body, user: { id: userId }, categories: body.categoryIds?.map(id => ({ id })) });
       return 'Post created successfully';
     } catch (e) {
       throw new BadRequestException('Error creating post');

@@ -32,9 +32,14 @@ export class UsersService {
           return user.posts;
      }
 
+     async getUserByEmail(email: string) {
+          return await this.usersRepository.findOne({where:{email}});
+     }
+
      async create(user: CreateUserDto) {
           try {
-               this.usersRepository.create(user);
+               const newUser=this.usersRepository.create(user); //execute hook before insert
+               await this.usersRepository.save(newUser);
                return 'User created successfully';
           } catch (e) {
                throw new BadRequestException('Error creating user');

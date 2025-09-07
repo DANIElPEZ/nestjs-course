@@ -1,9 +1,16 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common'; // Import Validations
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // swagger setup
+  const config = new DocumentBuilder().setTitle('Blog API').setDescription('Blog API description').setVersion('1.0').build();
+  const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, documentFactory, {jsonDocumentUrl: 'swagger/json'});
+
   app.useGlobalPipes(new ValidationPipe({
     transform: true, //use for nested classes "It's not real OOP: inheritance in DTOs only serves to reuse validations from the base class and add them to those of the subclass (and with ValidateNested Type,those of nested objects are also applied)"
     forbidNonWhitelisted: true, //throw error when non-whitelisted properties are present

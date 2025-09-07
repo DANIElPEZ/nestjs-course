@@ -41,7 +41,7 @@ export class PostsService {
     if (!post.content || !post.title || post.categories.length === 0) throw new BadRequestException('Post content, title and at least one category are required');
     const summary = await this.aiService.generateSummary(post.content);
     const image = await this.aiService.generateImage(summary ?? '');
-    const changes = this.postsRepository.merge(post,{isDraft:false, summary, coverImage: image??''});
+    await this.postsRepository.merge(post,{isDraft:false, summary, coverImage: image??''});
     return 'post published successfully';
   }
 

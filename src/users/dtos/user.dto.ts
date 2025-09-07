@@ -11,7 +11,7 @@ export class CreateUserDto {//this class is used to validate the data, not need 
 
   @IsEmail()
   @IsNotEmpty()
-  name: string;
+  email: string;
 
   @ValidateNested() //check rules of CreateProfileDto
   @Type(() => CreateProfileDto) //extends from CreateProfileDto

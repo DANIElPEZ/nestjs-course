@@ -16,13 +16,14 @@ import { AiModule } from './ai/ai.module';
     TypeOrmModule.forRootAsync({
         useFactory: (configService: ConfigService) => ({
           type: 'postgres',
-          host: configService.get('host'),
-          port: configService.get('port'),
-          database: configService.get('db'),
-          username: configService.get('db_user'),
-          password: configService.get('db_password'),
+          host: configService.get('DB_HOST'),
+          port: parseInt(configService.get<string>('DB_PORT') ?? '5432', 10),
+          database: configService.get('DB_NAME'),
+          username: configService.get('DB_USER'),
+          password: configService.get('DB_PASSWORD'),
           synchronize: false,
-          autoLoadEntities: true
+          autoLoadEntities: true,
+          logging: true
         }),
         inject:[ConfigService]
       }),

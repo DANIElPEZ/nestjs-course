@@ -16,7 +16,7 @@ export class AuthService {
           return user;
      }
 
-     async generateJWT(user: User){
+     generateJWT(user: User){
           return this.jwtService.sign({sub: user.id});//sign token to get session
      }
 }

@@ -7,14 +7,14 @@ export class AiService {
      private googleGenAI: GoogleGenAI;
 
      constructor(private configService: ConfigService) {
-          const apiKey = this.configService.get('gemini_api_key');
+          const apiKey = this.configService.get('GEMINI_API_KEY');
           if (!apiKey) throw new Error('Gemini API key is not set');
           this.googleGenAI = new GoogleGenAI({ apiKey });
      }
 
      async generateSummary(content: string) {
           const response = await this.googleGenAI.models.generateContent({
-               model: 'gemini-1.5-flash',
+               model: 'gemini-2.5-flash',
                contents: [
                     {
                          role: 'user',
@@ -32,7 +32,7 @@ export class AiService {
      async generateImage(text: string) {
           try {
                const response = await this.googleGenAI.models.generateImages({
-                    model: 'gemini-1.5-flash',
+                    model: 'gemini-2.5-flash',
                     prompt: `Generate an image for a blog post about ${text}`,
                     config: {
                          numberOfImages: 1,

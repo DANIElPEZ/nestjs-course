@@ -1,6 +1,7 @@
 import { NestFactory, Reflector } from '@nestjs/core';
-import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common'; // Import Validations
+import { BadRequestException, ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common'; // Import Validations
 import { AppModule } from './app.module';
+import helmet from 'helmet';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -17,9 +18,14 @@ async function bootstrap() {
     whitelist:true, //accept only properties that are defined in the DTO
     transformOptions:{
       enableImplicitConversion:true// convert default types from web to the types defined in dto's
-    }
+    },
+    //exceptionFactory: (errors)=>{return new BadRequestException(errors);}// complete logs of db
   }));// set regex validation as global
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));// apply rules for transform or exclude properties
+  app.use(helmet());
+  app.enableCors({
+    origin: '*',
+  });
   await app.listen(3000);
 }
 bootstrap();

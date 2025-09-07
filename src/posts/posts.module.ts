@@ -6,10 +6,10 @@ import { CategoriesController } from './controllers/categories.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
 import { Category } from './entities/category.entity';
-import { AiService } from '../ai/ai.service';
+import { AiModule } from '../ai/ai.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Post, Category]), AiService], // Import entity for repository injection
+  imports: [TypeOrmModule.forFeature([Post, Category]), AiModule], // Import entity for repository injection
   controllers: [PostsController, CategoriesController],
   providers: [PostsService, CategoriesService],
   exports: [PostsService, CategoriesService] // Export for use in other modules
